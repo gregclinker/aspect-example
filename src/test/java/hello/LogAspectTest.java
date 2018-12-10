@@ -1,6 +1,7 @@
 package hello;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,17 @@ public class LogAspectTest {
 	@Test
 	public void test1() throws Exception {
 		service.doSomething();
-		assertEquals(1, aspect.getMessages().size());
-		System.out.println(aspect.getMessages().get(0));
+		assertEquals(3, aspect.getMessages().size());
+	}
+
+	@Test
+	public void test2() throws Exception {
+		try {
+			service.doSomethingWrong();
+			fail();
+		} catch (Throwable t) {
+			assertEquals(1, aspect.getExceptions().size());
+			assertEquals(7, aspect.getMessages().size());
+		}
 	}
 }

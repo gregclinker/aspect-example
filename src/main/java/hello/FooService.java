@@ -14,4 +14,14 @@ public class FooService {
 		}
 	}
 
+	@LogExecutionTime
+	public void doSomethingWrong() {
+		try {
+			Thread.sleep(500l);
+			throw (new RuntimeException("something went wrong"));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
